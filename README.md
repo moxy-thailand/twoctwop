@@ -1,6 +1,6 @@
-# Twoctwop
+# 2c2p
 
-TODO: Write a gem description
+This is a ruby wrapper for the 2c2p payment gateway
 
 ## Installation
 
