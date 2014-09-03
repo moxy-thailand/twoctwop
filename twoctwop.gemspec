@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = Twoctwop::VERSION
   spec.authors       = ["Zack Siri"]
   spec.email         = ["zack@codemy.net"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
-  spec.homepage      = ""
+  spec.summary       = %q{Ruby wrapper for 2c2p}
+  spec.description   = %q{This gem allows you to interface with 2c2p paymen gateway}
+  spec.homepage      = "http://www.codemy.net"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
