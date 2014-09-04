@@ -4,7 +4,7 @@ require 'digest/hmac'
 module Twoctwop
   class Request
 
-    attr_accessor :data
+    attr_accessor :data, :env
 
     ENDPOINT = { 
       test: 'http://demo2.2c2p.com/2C2PFrontEnd/SecurePayment/Payment.aspx',
@@ -21,21 +21,26 @@ module Twoctwop
       raise "Secret key is nil"  if Twoctwop::Config.secret_key.nil?
 
       @data = build_final_data(data)
+      @env  = Twoctwop::Config.env == 'production' ? :live : :test
     end
-
-    def make_payment!
-      RestClient.post endpoint, :paymentRequest => Base64.strict_encode64(data)
-    end
-
-  private
 
     def endpoint
-      ENDPOINT[(Rails.env.production? ? :live : :test)]
+      ENDPOINT[env]
     end
 
     def secure_endpoint
-      
+      SECURE_ENDPOINT[env]
     end
+
+    def payload
+      Base64.strict_encode64(payment_request)
+    end
+
+    def make_non_3ds_payment!
+      RestClient.post endpoint, :paymentRequest => payload
+    end
+
+  private
 
     def build_final_data(data)
       data.merge({
