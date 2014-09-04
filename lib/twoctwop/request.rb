@@ -6,28 +6,45 @@ module Twoctwop
 
     attr_accessor :data
 
+    ENDPOINT = { 
+      test: 'http://demo2.2c2p.com/2C2PFrontEnd/SecurePayment/Payment.aspx',
+      live: ''
+    }
+
+    SECURE_ENDPOINT = {
+      test: '',
+      live: ''
+    }
+
     def initialize(data = {})
       raise "Merchant ID is nil" if Twoctwop::Config.merchant_id.nil?
       raise "Secret key is nil"  if Twoctwop::Config.secret_key.nil?
 
-      @data = data
-      build_final_data!
+      @data = build_final_data(data)
     end
 
-    def encoded_request
-      Base64.strict_encode64(data)
+    def make_payment!
+      RestClient.post endpoint, :paymentRequest => Base64.strict_encode64(data)
     end
 
   private
 
-    def build_final_data!
+    def endpoint
+      ENDPOINT[(Rails.env.production? ? :live : :test)]
+    end
+
+    def secure_endpoint
+      
+    end
+
+    def build_final_data(data)
       data.merge({
         merchantID: Twoctwop::Config.merchant_id,
-        hashValue: calculate_hash_data_digest
+        hashValue: calculate_hash_data_digest(data)
       })
     end
 
-    def calculate_hash_data_digest
+    def calculate_hash_data_digest(data)
       hash_data = [Twoctwop::Config.merchant_id, data[:uniqueTransactionCode], data[:amt]].join
       Digest::HMAC.hexdigest(hash_data, Twoctwop::Config.secret_key, Digest::SHA1)
     end
