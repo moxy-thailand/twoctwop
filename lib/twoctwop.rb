@@ -1,5 +1,5 @@
 require "twoctwop/version"
 
 module Twoctwop
-  # Your code goes here...
+  extend Config
 end
