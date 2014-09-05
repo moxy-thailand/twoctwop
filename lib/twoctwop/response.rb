@@ -17,7 +17,7 @@ module Twoctwop
     end
 
     def decrypt_body
-      Hash.from_xml(body.decrypt(private_key, certificate))
+      Hashie::Mash.new(Hash.from_xml(body.decrypt(private_key, certificate))['PaymentResponse'])
     end
   end
 end

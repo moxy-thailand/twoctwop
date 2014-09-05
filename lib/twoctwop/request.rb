@@ -1,6 +1,7 @@
 require 'base64'
 require 'digest/hmac'
 require 'rest-client'
+require 'hashie'
 
 module Twoctwop
   class Request
@@ -9,11 +10,6 @@ module Twoctwop
 
     ENDPOINT = { 
       test: 'http://demo2.2c2p.com/2C2PFrontEnd/SecurePayment/Payment.aspx',
-      live: ''
-    }
-
-    SECURE_ENDPOINT = {
-      test: 'http://demo2.2c2p.com/2C2PFrontEnd/SecurePayment/PaymentAuth.aspx',
       live: ''
     }
 
@@ -27,10 +23,6 @@ module Twoctwop
 
     def endpoint
       ENDPOINT[env]
-    end
-
-    def secure_endpoint
-      SECURE_ENDPOINT[env]
     end
 
     def payload
