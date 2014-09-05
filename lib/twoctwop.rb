@@ -1,5 +1,9 @@
 require "twoctwop/version"
+require "twoctwop/config"
+require "twoctwop/request"
+require "twoctwop/response"
 
 module Twoctwop
-  # Your code goes here...
+  extend Config
 end
+
