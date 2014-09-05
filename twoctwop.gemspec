@@ -19,8 +19,9 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
 
-  spec.add_dependency "builder"
-  spec.add_dependency "rest-client"
+  spec.add_dependency "builder", "~> 3.2.2"
+  spec.add_dependency "rest-client", "~> 1.7.2"
+  spec.add_dependency "ox",       "~> 2.1.3"
 
   spec.add_development_dependency "bundler", "~> 1.6"
   spec.add_development_dependency "rake"

@@ -12,7 +12,7 @@ module Twoctwop
     }
 
     SECURE_ENDPOINT = {
-      test: '',
+      test: 'http://demo2.2c2p.com/2C2PFrontEnd/SecurePayment/PaymentAuth.aspx',
       live: ''
     }
 
@@ -37,7 +37,8 @@ module Twoctwop
     end
 
     def make_non_3ds_payment!
-      RestClient.post endpoint, :paymentRequest => payload
+      body = RestClient.post endpoint, :paymentRequest => payload
+      response = Response.new(body).descrypt
     end
 
   private
