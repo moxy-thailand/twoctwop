@@ -1,3 +1,5 @@
+require 'ox'
+
 module Twoctwop
 
   class Response
@@ -13,7 +15,7 @@ module Twoctwop
 
     def decrypt
       data = OpenSSL::PKCS7.new(body)
-      data.decrypt(private_key, certificate)
+      Ox.parse_object(data.decrypt(private_key, certificate))
     end
   end
 end

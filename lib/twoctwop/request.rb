@@ -38,7 +38,7 @@ module Twoctwop
 
     def make_non_3ds_payment!
       body = RestClient.post endpoint, :paymentRequest => payload
-      response = Response.new(body).descrypt
+      Response.new(body).decrypt
     end
 
   private
