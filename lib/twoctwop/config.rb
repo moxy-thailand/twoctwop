@@ -9,12 +9,14 @@ module Twoctwop
   # Twoctwop::Config.configure do |config|
   #   config.merchant_id = '111'
   #   config.secret_key  = '12345678'
+  #   config.private_key = 'private key goes here'
+  #   config.certificate = 'certifiate goes here'
   # end
 
   module Config
     extend self
 
-    attr_writer :env, :merchant_id, :secret_key
+    attr_accessor :merchant_id, :secret_key, :private_key, :certificate
 
     def configure
       yield self  

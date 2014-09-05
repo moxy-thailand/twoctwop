@@ -1,4 +1,4 @@
-require 'ox'
+require 'openssl'
 
 module Twoctwop
 
@@ -7,15 +7,17 @@ module Twoctwop
     attr_accessor :certificate, :private_key, :body
 
     def initialize(body)
-      @certificate = OpenSSL::X509::Certificate.new(Twoctwop::Config.certificate)
-      @private_key = OpenSSL::PKey::RSA.new(Twoctwop::Config.private_key, '')
+      raise "No private key defined" if Twoctwop::Config.private_key.nil?
+      raise "No certificate defined" if Twoctwop::Config.certificate.nil?
 
-      @body = Base64.strict_decode64(body)
+      @certificate = OpenSSL::X509::Certificate.new(Twoctwop::Config.certificate)
+      @private_key = OpenSSL::PKey::RSA.new(Twoctwop::Config.private_key)
+
+      @body = OpenSSL::PKCS7.new(Base64.strict_decode64(body))
     end
 
-    def decrypt
-      data = OpenSSL::PKCS7.new(body)
-      Ox.parse_object(data.decrypt(private_key, certificate))
+    def decrypt_body
+      Hash.from_xml(body.decrypt(private_key, certificate))
     end
   end
 end

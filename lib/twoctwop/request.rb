@@ -1,5 +1,6 @@
 require 'base64'
 require 'digest/hmac'
+require 'rest-client'
 
 module Twoctwop
   class Request
@@ -20,7 +21,7 @@ module Twoctwop
       raise "Merchant ID is nil" if Twoctwop::Config.merchant_id.nil?
       raise "Secret key is nil"  if Twoctwop::Config.secret_key.nil?
 
-      @data = build_final_data(data)
+      @data = data
       @env  = Twoctwop::Config.env == 'production' ? :live : :test
     end
 
@@ -33,34 +34,30 @@ module Twoctwop
     end
 
     def payload
-      Base64.strict_encode64(payment_request)
+      Base64.strict_encode64(build_final_data.to_xml(root: 'PaymentRequest', 
+                                                     skip_instruct: true, 
+                                                     skip_types: true, 
+                                                     indent: 0))
     end
 
     def make_non_3ds_payment!
       body = RestClient.post endpoint, :paymentRequest => payload
-      Response.new(body).decrypt
+      Response.new(body).decrypt_body
     end
 
   private
 
-    def build_final_data(data)
+    def build_final_data
       data.merge({
+        version: '8.0',
         merchantID: Twoctwop::Config.merchant_id,
-        hashValue: calculate_hash_data_digest(data)
+        hashValue: calculate_hash_data_digest
       })
     end
 
-    def calculate_hash_data_digest(data)
+    def calculate_hash_data_digest
       hash_data = [Twoctwop::Config.merchant_id, data[:uniqueTransactionCode], data[:amt]].join
       Digest::HMAC.hexdigest(hash_data, Twoctwop::Config.secret_key, Digest::SHA1)
-    end
-
-    def payment_request
-      Builder::XmlMarkup.new.PaymentRequest do |p|
-        data.keys.each do |k|
-          p.send(k, data[k]) 
-        end
-      end
     end
 
   end
