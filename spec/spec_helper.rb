@@ -34,6 +34,7 @@ RSpec.configure do |config|
       c.secret_key  = '7jYcp4FxFdf0'
       c.private_key = File.read(File.join(config.certificate_path, 'demo2.pem'))
       c.certificate = File.read(File.join(config.certificate_path, 'demo2.crt'))
+      c.passphrase  = '2c2p'
     end
   end
 end

@@ -11,12 +11,13 @@ module Twoctwop
   #   config.secret_key  = '12345678'
   #   config.private_key = 'private key goes here'
   #   config.certificate = 'certifiate goes here'
+  #   config.passphrase  = 'if private key has passphrase'
   # end
 
   module Config
     extend self
 
-    attr_accessor :merchant_id, :secret_key, :private_key, :certificate
+    attr_accessor :merchant_id, :secret_key, :private_key, :certificate, :passphrase
 
     def configure
       yield self  
