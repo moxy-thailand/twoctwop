@@ -21,7 +21,8 @@ require 'twoctwop'
 RSpec.configure do |config|
   config.add_setting :certificate_path
 
-  config.certificate_path = File.expand_path(File.dirname(__FILE__) + '/fixtures/certificate')
+  config.certificate_path = File.expand_path(Twoctwop.root + '/spec/fixtures/certificate')
+
 
   config.before(:all) do 
     Twoctwop::Config.configure do |c|

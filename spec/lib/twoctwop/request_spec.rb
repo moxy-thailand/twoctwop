@@ -15,9 +15,7 @@ module Twoctwop
       }
     end
 
-    let(:built_request) do
-      "<PaymentRequest><uniqueTransactionCode>M1000</uniqueTransactionCode><desc>Polo Shirt</desc><amt>0000000040000</amt><currencyCode>764</currencyCode><panBank>Siam Commercial Bank</panBank><panCountry>TH</panCountry><cardHolderName>Zack Siri</cardHolderName><encCardInfo>encrypted card data</encCardInfo><version>8.0</version><merchantID>JT01</merchantID><hashValue>a17ed46e7082320644771fbb30a1160c3de41a10</hashValue></PaymentRequest>"
-    end
+    let(:built_request) { File.read(File.join(Twoctwop.root, 'spec', 'fixtures', 'built_request.txt')) }
 
     describe "#build_request" do 
       let(:request) { Twoctwop::Request.new(data) }
