@@ -1,4 +1,5 @@
 require 'openssl'
+require 'active_support/core_ext'
 
 module Twoctwop
 
@@ -11,7 +12,7 @@ module Twoctwop
       raise "No certificate defined" if Twoctwop::Config.certificate.nil?
 
       @certificate = OpenSSL::X509::Certificate.new(Twoctwop::Config.certificate)
-      @private_key = OpenSSL::PKey::RSA.new(Twoctwop::Config.private_key)
+      @private_key = OpenSSL::PKey::RSA.new(Twoctwop::Config.private_key, Twoctwop::Config.passphrase)
 
       @body = OpenSSL::PKCS7.new(Base64.strict_decode64(body))
     end
