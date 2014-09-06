@@ -1,6 +1,7 @@
 require 'base64'
 require 'openssl'
 require 'rest-client'
+require 'builder'
 require 'hashie'
 
 module Twoctwop
@@ -27,10 +28,7 @@ module Twoctwop
     end
 
     def payload
-      Base64.strict_encode64(build_final_data.to_xml(root: 'PaymentRequest', 
-                                                     skip_instruct: true, 
-                                                     skip_types: true, 
-                                                     indent: 0))
+      Base64.strict_encode64(build_request)
     end
 
     def make_non_3ds_payment!
@@ -40,7 +38,17 @@ module Twoctwop
 
   private
 
-    def build_final_data
+    def build_request
+      final_hash = build_final_hash
+
+      Builder::XmlMarkup.new.PaymentRequest do |p|
+        final_hash.keys.each do |k|
+          p.tag!(k, final_hash[k]) 
+        end
+      end
+    end
+
+    def build_final_hash
       data.merge({
         version: '8.0',
         merchantID: Twoctwop::Config.merchant_id,
