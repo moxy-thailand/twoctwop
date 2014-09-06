@@ -18,7 +18,24 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+First we need to create a request object
+
+```ruby
+
+request_hash = { 
+  uniqueTransactionCode: 'M0001',                           # invoice number
+  desc:                  'Polo Shirt',                      # order description
+  amt:                   '000040000000',                    # must have 12 digits
+  currencyCode:          764,                               # 764 for thai baht (based on http://en.wikipedia.org/wiki/ISO_4217)
+  panBank:               iin_data['bank'],                  # Issuing Bank Name
+  panCountry:            iin_data['country_code'],          # Issuing Bank Country
+  cardholderName:        payment.details['name_on_card'],   # Card holder name
+  encCardData:           payment.details['encrypted_card'], # Encrypted card data from payment form
+}
+
+request  = Twoctwop::Request.new(request_hash)
+response = request.make_non_3ds_payment! # this will make the request and return a response
+```
 
 ## Contributing
 
