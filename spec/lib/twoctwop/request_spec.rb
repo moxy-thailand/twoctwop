@@ -2,18 +2,7 @@ require 'spec_helper'
 
 module Twoctwop
   describe Request do 
-    let(:data) do
-      {
-        uniqueTransactionCode: "M1000",
-        desc:                  "Polo Shirt",
-        amt:                   "0000000040000",
-        currencyCode:          764,
-        panBank:               "Siam Commercial Bank",
-        panCountry:            "TH",
-        cardHolderName:        "Zack Siri",
-        encCardInfo:           "encrypted card data"
-      }
-    end
+    include_context "data"
 
     let(:built_request) { File.read(File.join(Twoctwop.root, 'spec', 'fixtures', 'built_request.txt')) }
 

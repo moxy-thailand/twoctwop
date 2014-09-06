@@ -18,6 +18,10 @@ require 'twoctwop'
 # users commonly want.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+
+Dir[File.join(Twoctwop.root, "spec/support/**/*.rb")].each { |f| require f }
+
+
 RSpec.configure do |config|
   config.add_setting :certificate_path
 

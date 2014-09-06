@@ -33,6 +33,7 @@ module Twoctwop
 
     def make_non_3ds_payment!
       body = RestClient.post endpoint, :paymentRequest => payload
+      binding.pry
       Response.new(body).decrypt_body
     end
 
