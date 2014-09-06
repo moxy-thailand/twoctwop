@@ -1,12 +1,12 @@
 require 'base64'
-require 'digest/hmac'
+require 'openssl'
 require 'rest-client'
 require 'hashie'
 
 module Twoctwop
   class Request
 
-    attr_accessor :data, :env
+    attr_accessor :data, :env, :digest
 
     ENDPOINT = { 
       test: 'http://demo2.2c2p.com/2C2PFrontEnd/SecurePayment/Payment.aspx',
@@ -16,6 +16,7 @@ module Twoctwop
     def initialize(data = {})
       raise "Merchant ID is nil" if Twoctwop::Config.merchant_id.nil?
       raise "Secret key is nil"  if Twoctwop::Config.secret_key.nil?
+      @digest  = OpenSSL::Digest.new('sha1')
 
       @data = data
       @env  = Twoctwop::Config.env == 'production' ? :live : :test
@@ -49,7 +50,7 @@ module Twoctwop
 
     def calculate_hash_data_digest
       hash_data = [Twoctwop::Config.merchant_id, data[:uniqueTransactionCode], data[:amt]].join
-      Digest::HMAC.hexdigest(hash_data, Twoctwop::Config.secret_key, Digest::SHA1)
+      OpenSSL::HMAC.hexdigest(digest, Twoctwop::Config.secret_key, hash_data)
     end
 
   end
