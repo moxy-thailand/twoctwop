@@ -46,7 +46,7 @@ To Save the card into 2c2p you just need to add the token
 request = Twoctwop::Request.new(data: request_hash, token: 'blah')
 ```
 
-This will save the token and you can make payments using tokens instead of the card information.
+This will save the token and you can make payments using tokens instead of the card information. You can generate any token you want from your application as long as you can reference it again when you need to pass it into the `Twoctwop::Request` object.
 
 ## Contributing
 
