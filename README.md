@@ -1,5 +1,7 @@
 # 2c2p
 
+[ ![Codeship Status for codemy/twoctwop](https://codeship.io/projects/e177b320-18a3-0132-1aba-4eb52c1571b2/status)](https://codeship.io/projects/34256)
+
 This is a ruby wrapper for the 2c2p payment gateway
 
 Currently this gem doesn't support 3ds payments, it makes a non_3ds payment which provides a smoother user experience.
