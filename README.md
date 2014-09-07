@@ -36,9 +36,17 @@ request_hash = {
   encCardData:           'iamencrypteddata'       # Encrypted card data from payment form
 }
 
-request  = Twoctwop::Request.new(request_hash)
+request  = Twoctwop::Request.new(data: request_hash)
 response = request.make_non_3ds_payment! # this will make the request and return a response
 ```
+
+To Save the card into 2c2p you just need to add the token
+
+```ruby
+request = Twoctwop::Request.new(data: request_hash, token: 'blah')
+```
+
+This will save the token and you can make payments using tokens instead of the card information.
 
 ## Contributing
 
