@@ -31,7 +31,7 @@ request_hash = {
   panBank:               'Siam Commercial Bank',  # Issuing Bank Name
   panCountry:            'TH',                    # Issuing Bank Country
   cardholderName:        'Zack Siri',             # Card holder name
-  encCardData:           'iamencrypteddata',      # Encrypted card data from payment form
+  encCardData:           'iamencrypteddata'       # Encrypted card data from payment form
 }
 
 request  = Twoctwop::Request.new(request_hash)
