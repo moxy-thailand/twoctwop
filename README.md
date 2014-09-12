@@ -1,5 +1,7 @@
 # 2c2p
 
+[ ![Codeship Status for codemy/twoctwop](https://codeship.io/projects/e177b320-18a3-0132-1aba-4eb52c1571b2/status)](https://codeship.io/projects/34256)
+
 This is a ruby wrapper for the 2c2p payment gateway
 
 Currently this gem doesn't support 3ds payments, it makes a non_3ds payment which provides a smoother user experience.
@@ -31,12 +33,20 @@ request_hash = {
   panBank:               'Siam Commercial Bank',  # Issuing Bank Name
   panCountry:            'TH',                    # Issuing Bank Country
   cardholderName:        'Zack Siri',             # Card holder name
-  encCardData:           'iamencrypteddata',      # Encrypted card data from payment form
+  encCardData:           'iamencrypteddata'       # Encrypted card data from payment form
 }
 
-request  = Twoctwop::Request.new(request_hash)
+request  = Twoctwop::Request.new(data: request_hash)
 response = request.make_non_3ds_payment! # this will make the request and return a response
 ```
+
+To Save the card into 2c2p you just need to add the token
+
+```ruby
+request = Twoctwop::Request.new(data: request_hash, token: 'blah')
+```
+
+This will save the token and you can make payments using tokens instead of the card information. You can generate any token you want from your application as long as you can reference it again when you need to pass it into the `Twoctwop::Request` object.
 
 ## Contributing
 

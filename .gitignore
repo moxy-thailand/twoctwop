@@ -33,7 +33,7 @@ mkmf.log
 .dat*
 .repl_history
 build/
-
+.DS_Store
 ## Documentation cache and generated files:
 /.yardoc/
 /_yardoc/

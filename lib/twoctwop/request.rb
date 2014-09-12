@@ -7,17 +7,19 @@ require 'hashie'
 module Twoctwop
   class Request
 
-    attr_accessor :data, :env, :digest
+    attr_accessor :data, :env, :digest, :token
 
     ENDPOINT = { 
       test: 'http://demo2.2c2p.com/2C2PFrontEnd/SecurePayment/Payment.aspx',
       live: ''
     }
 
-    def initialize(data = {})
+    def initialize(data: {}, token: nil)
       raise "Merchant ID is nil" if Twoctwop::Config.merchant_id.nil?
       raise "Secret key is nil"  if Twoctwop::Config.secret_key.nil?
-      @digest  = OpenSSL::Digest.new('sha1')
+
+      @token = token
+      @digest = OpenSSL::Digest.new('sha1')
 
       @data = data
       @env  = Twoctwop::Config.env == 'production' ? :live : :test
@@ -33,7 +35,6 @@ module Twoctwop
 
     def make_non_3ds_payment!
       body = RestClient.post endpoint, :paymentRequest => payload
-      binding.pry
       Response.new(body).decrypt_body
     end
 
@@ -53,8 +54,12 @@ module Twoctwop
       data.merge({
         version: '8.0',
         merchantID: Twoctwop::Config.merchant_id,
-        hashValue: calculate_hash_data_digest
-      })
+        hashValue: calculate_hash_data_digest,
+      }).merge(store_card_token)
+    end
+
+    def store_card_token
+      token ? { storeCard: 'Y', storeCardUniqueID: token } : {}
     end
 
     def calculate_hash_data_digest
