@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Zack Siri"]
   spec.email         = ["zack@codemy.net"]
   spec.summary       = %q{Ruby wrapper for 2c2p}
-  spec.description   = %q{This gem allows you to interface with 2c2p paymen gateway}
-  spec.homepage      = "http://www.codemy.net"
+  spec.description   = %q{This gem allows you to interface with 2c2p payment gateway}
+  spec.homepage      = "http://www.ilovemoxy.com"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
