@@ -9,9 +9,11 @@ Feel free to fork, edit, and add to this gem, and please help us open source
 more projects like this in order to help combat the horrific monster that is 
 digital payments in Thailand. We can do it if we work together!
 
-  -> MOXY
+### Contributors
 
+This gem was made possible by: 
 
++ [MOXY](http://www.moxyst.com)
 
 
 ## Installation
