@@ -7,12 +7,8 @@ require 'hashie'
 module Twoctwop
   class Request
 
-    attr_accessor :data, :env, :digest, :token
+    attr_accessor :data, :digest, :token
 
-    ENDPOINT = { 
-      test: 'http://demo2.2c2p.com/2C2PFrontEnd/SecurePayment/Payment.aspx',
-      live: 'https://s.2c2p.com/SecurePayment/paymentauth.aspx'
-    }
 
     def initialize(data: {}, token: nil)
       raise "Merchant ID is nil" if Twoctwop::Config.merchant_id.nil?
@@ -22,11 +18,10 @@ module Twoctwop
       @digest = OpenSSL::Digest.new('sha1')
 
       @data = data
-      @env  = Twoctwop::Config.env == 'production' ? :live : :test
     end
 
     def endpoint
-      ENDPOINT[env]
+      Twoctwop::Config.endpoint
     end
 
     def payload

@@ -17,20 +17,10 @@ module Twoctwop
   module Config
     extend self
 
-    attr_accessor :merchant_id, :secret_key, :private_key, :certificate, :passphrase
+    attr_accessor :merchant_id, :secret_key, :private_key, :certificate, :passphrase, :endpoint
 
     def configure
       yield self  
-    end
-
-    def env
-      @env ||= if defined? Rails
-        Rails.env
-      elsif ENV['RACK_ENV']
-        ENV['RACK_ENV']
-      else
-        'development'
-      end
     end
   end
 end
