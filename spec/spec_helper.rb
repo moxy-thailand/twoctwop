@@ -30,6 +30,7 @@ RSpec.configure do |config|
 
   config.before(:all) do 
     Twoctwop::Config.configure do |c|
+      c.endpoint    = 'https://s.2c2p.com/SecurePayment/paymentauth.aspx'
       c.merchant_id = 'JT01'
       c.secret_key  = '7jYcp4FxFdf0'
       c.private_key = File.read(File.join(config.certificate_path, 'demo2.pem'))
