@@ -11,7 +11,7 @@ module Twoctwop
 
     ENDPOINT = { 
       test: 'http://demo2.2c2p.com/2C2PFrontEnd/SecurePayment/Payment.aspx',
-      live: ''
+      live: 'https://s.2c2p.com/SecurePayment/paymentauth.aspx'
     }
 
     def initialize(data: {}, token: nil)
