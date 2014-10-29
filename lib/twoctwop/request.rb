@@ -11,6 +11,7 @@ module Twoctwop
 
 
     def initialize(data: {}, token: nil)
+      raise "Set end point"      if Twoctwop::Config.endpoint.nil?
       raise "Merchant ID is nil" if Twoctwop::Config.merchant_id.nil?
       raise "Secret key is nil"  if Twoctwop::Config.secret_key.nil?
 
